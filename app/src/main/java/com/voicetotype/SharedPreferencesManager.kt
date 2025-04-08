@@ -32,12 +32,23 @@ class SharedPreferencesManager(context: Context) {
     }
 
 
-    // Clear all saved preferences
-    fun clearAll() {
+    fun getLastSpeechIndex(): Int {
+        return sharedPreferences.getInt("last_speech_index", 0)  // Default to 0
+    }
+
+
+    fun saveLastSpeechIndex(index: Int) {
+        sharedPreferences.edit().putInt("last_speech_index", index).apply()
+    }
+
+
+
+    fun clearRecognizedText() {
         val editor = sharedPreferences.edit()
-        editor.clear()
+        editor.remove(KEY_RECOGNIZED_TEXT) // Removes the specific key
         editor.apply()
     }
+
 
 
 }

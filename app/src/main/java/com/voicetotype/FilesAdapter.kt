@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.voicetotype.database.DataRecordModel
 import com.voicetotype.databinding.RecentItemsBinding
 
-class FilesAdapter(var allRecords: List<DataRecordModel> , var id :(Int , String, ImageView)-> Unit  ) : RecyclerView.Adapter<FilesAdapter.ViewHolder>() {
+class FilesAdapter(var allRecords: List<DataRecordModel> , var id :(String , Int , String, ImageView)-> Unit  ) : RecyclerView.Adapter<FilesAdapter.ViewHolder>() {
 
 
     inner class ViewHolder(var binding: RecentItemsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -27,7 +27,7 @@ class FilesAdapter(var allRecords: List<DataRecordModel> , var id :(Int , String
 
 
             holder.binding.parentLayout .setOnClickListener{
-                id(allRecords[position].id , allRecords[position].data , binding.icDelete)
+                id( allRecords[position].name,  allRecords[position].id , allRecords[position].data , binding.icDelete)
             }
 
 

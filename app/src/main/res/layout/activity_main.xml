@@ -173,7 +173,7 @@
 
 
     <ImageView
-        android:id="@+id/imgPlus"
+        android:id="@+id/imgmainPlus"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"

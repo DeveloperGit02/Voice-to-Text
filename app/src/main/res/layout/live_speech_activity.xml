@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingScreen">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".LiveSpeechActivity"
+
+    >
+
 
 
     <View
@@ -17,23 +20,22 @@
 
 
     <ImageView
-        android:id="@+id/back"
+        android:id="@+id/backImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
         android:src="@drawable/back"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="@+id/viewTop" />
 
     <TextView
-        android:id="@+id/txtHome"
+        android:id="@+id/txtLiveSpeech"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Settings"
+        android:text="Live Speech"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,93 +43,69 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageView
+        android:id="@+id/shareImg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/ic_new_share"
+        android:backgroundTint="@color/white"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewTop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewTop" />
+
+
     <TextView
-        android:id="@+id/txtFaq"
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
-        android:fontFamily="@font/poppins_semibold"
-        android:padding="2dp"
-        android:text="FAQs"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/poppins_regular"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewTop" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/linecolor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFaq" />
 
     <TextView
-        android:id="@+id/txtContactUs"
-        android:layout_width="match_parent"
+        android:id="@+id/txtVoiceRecorder"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:padding="2dp"
-        android:text="Contact us"
-        android:textSize="18sp"
+        android:text="Voice Recorder"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/icLiveRecorder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/icLiveRecorder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/voicerecorder"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFaq" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/linecolor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtContactUs" />
 
     <TextView
-        android:id="@+id/txtPP"
-        android:layout_width="match_parent"
+        android:id="@+id/txtTaptoSpech"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
+        android:layout_marginBottom="20dp"
         android:fontFamily="@font/poppins_semibold"
-        android:padding="2dp"
-        android:text="Privacy Policy"
-        android:textSize="18sp"
+        android:text="Tap to start Live Speech"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/imgPlus"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtContactUs" />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/linecolor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPP" />
-
-    <TextView
-        android:id="@+id/AboutApp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
-        android:fontFamily="@font/poppins_semibold"
-        android:padding="2dp"
-        android:text="About App"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtPP" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <ImageView
@@ -146,7 +124,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/plus"
+        android:src="@drawable/livespeech_mic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -155,7 +133,7 @@
         android:id="@+id/icHome"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/home"
+        android:background="@drawable/home_active"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/fotterLayout"
         app:layout_constraintEnd_toStartOf="@+id/imgPlus"
@@ -172,6 +150,5 @@
         app:layout_constraintEnd_toEndOf="@+id/fotterLayout"
         app:layout_constraintStart_toEndOf="@+id/imgPlus"
         app:layout_constraintTop_toTopOf="@+id/fotterLayout" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

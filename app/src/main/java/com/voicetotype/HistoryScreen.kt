@@ -3,7 +3,6 @@ package com.voicetotype
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.voicetotype.database.AppDatabase
@@ -21,8 +20,8 @@ class HistoryScreen : AppCompatActivity() {
     private lateinit var userDao: RecordDao
     private lateinit var userRepository: UserRepository
     var fAdapter: FilesAdapter? = null
-    var recordIdValue : Int? = null
-
+    var recordIdValue: Int? = null
+    var filename: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,15 +38,13 @@ class HistoryScreen : AppCompatActivity() {
 //        getRecord()
 
 
-
-
         lifecycleScope.launch(Dispatchers.IO) {
             // Get all records from the repository
             val allRecords = userRepository.getAllRecords()
 
             // Initialize the adapter and pass the lambda for deletion
-            fAdapter = FilesAdapter(allRecords) { recordId, data, image ->
-
+            fAdapter = FilesAdapter(allRecords) { fileName, recordId, data, image ->
+                filename = fileName
                 recordIdValue = recordId
                 // Inside the lambda, perform the deletion in the IO thread
 //                lifecycleScope.launch(Dispatchers.IO) {
@@ -56,8 +53,7 @@ class HistoryScreen : AppCompatActivity() {
 
                 startActivity(
                     Intent(
-                        this@HistoryScreen,
-                        ViewActivity::class.java
+                        this@HistoryScreen, ViewActivity::class.java
                     ).putExtra("datafile", data)
                 )
 
@@ -75,12 +71,11 @@ class HistoryScreen : AppCompatActivity() {
 
 
         binding.icHome.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
-        binding.imgPlus.setOnClickListener { startActivity(Intent(this, LiveSpeech::class.java)) }
+        binding.imgHistoryPlus.setOnClickListener { startActivity(Intent(this, LiveSpeech::class.java)) }
         binding.icSetting.setOnClickListener {
             startActivity(
                 Intent(
-                    this,
-                    SettingScreen::class.java
+                    this, SettingScreen::class.java
                 )
             )
         }
@@ -90,12 +85,9 @@ class HistoryScreen : AppCompatActivity() {
     private fun showDialog() {
 
 
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder
-            .setMessage("Are you sure to delete this file")
-            .setTitle("Dialog")
-            .setPositiveButton("Yes") { dialog, which ->
+        builder.setMessage("Are you sure you want to delete this file" + filename)
+            .setTitle("Delete").setPositiveButton("Yes") { dialog, which ->
                 lifecycleScope.launch(Dispatchers.IO) {
                     userRepository.deleteRecordById(recordIdValue!!)
                     // After deletion, fetch updated records and update UI on the main thread
@@ -108,8 +100,7 @@ class HistoryScreen : AppCompatActivity() {
                     }
 
                 }
-            }
-            .setNegativeButton("No") { dialog, which ->
+            }.setNegativeButton("No") { dialog, which ->
                 dialog.dismiss()
             }
 
@@ -117,34 +108,9 @@ class HistoryScreen : AppCompatActivity() {
         dialog.show()
 
 
-
     }
 
 
-//    private fun getRecord() {
-//        lifecycleScope.launch(Dispatchers.IO) {
-//
-//            val allRecords = userRepository.getAllRecords()
-//
-//            withContext(Dispatchers.Main) {
-//                // For example, display the records in a Toast or use them in your UI
-//                allRecords.forEach { record ->
-////                    Toast.makeText(applicationContext, "Record: ${record.name}", Toast.LENGTH_SHORT)
-////                        .show()
-//                }
-//
-//
-//            }
-//
-//            Log.e("records", "getRecord: " + allRecords)
-//            // Switch back to the main thread after inserting
-//            withContext(Dispatchers.Main) {
-//                // Do any UI updates here (e.g., show a message that the user was added)
-//
-//
-//            }
-//        }
-//    }
 
 
 }

@@ -18,22 +18,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         lisener()
+
+
     }
 
 
     fun lisener() {
-        binding.imgPlus.setOnClickListener(this)
+        binding.imgmainPlus.setOnClickListener(this)
         binding.icSetting.setOnClickListener(this)
         binding.icHistory.setOnClickListener(this)
         binding.uploadAudio.setOnClickListener(this)
     }
 
+
     override fun onClick(v: View?) {
         when (v!!.id) {
 
-            R.id.imgPlus -> {
+            R.id.imgmainPlus -> {
                 startActivity(Intent(this, LiveSpeech::class.java))
-
             }
 
             R.id.icSetting -> {
@@ -52,4 +54,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         }
     }
+
+
 }
