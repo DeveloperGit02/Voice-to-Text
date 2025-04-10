@@ -2,53 +2,50 @@ package com.voicetotype
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.voicetotype.database.DataRecordModel
 import com.voicetotype.databinding.RecentItemsBinding
 
-class FilesAdapter(
+class HistoryAdapter(
     var allRecords: List<DataRecordModel>,
-    var iconCall: (ImageView, Int, String) -> Unit,
+    var delIcon: ( Int, String) -> Unit,
     var id: ( String) -> Unit
-) : RecyclerView.Adapter<FilesAdapter.ViewHolder>() {
-
-    private var isExpanded = false
-
+) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(var binding: RecentItemsBinding) : RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilesAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryAdapter.ViewHolder {
         val binding = RecentItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FilesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: HistoryAdapter.ViewHolder, position: Int) {
 
         holder.apply {
 
             binding.txtFileName.text = allRecords[position].name
             binding.txtDateTime.text = allRecords[position].dateTime
 
+
             holder.binding.icDelete.setOnClickListener {
-                iconCall(binding.icDelete, allRecords[position].id , allRecords[position].name )
+               delIcon( allRecords[position].id , allRecords[position].name)
             }
+
 
             holder.binding.view.setOnClickListener {
                 id(
                     allRecords[position].data,
                 )
             }
-
-
         }
     }
 
     override fun getItemCount(): Int {
         Log.e("size", "getItemCount: " + allRecords.size)
-        return if (isExpanded || allRecords.size <= 5) allRecords.size else 5
-
+        return allRecords.size
     }
 
 

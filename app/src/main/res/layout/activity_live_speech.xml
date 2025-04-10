@@ -102,7 +102,7 @@
         android:text="Tap to start Live Speech"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/imgPlus"
+        app:layout_constraintBottom_toTopOf="@+id/imgRecord"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -135,7 +135,7 @@
         android:background="@drawable/home_active"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/fotterLayout"
-        app:layout_constraintEnd_toStartOf="@+id/imgPlus"
+        app:layout_constraintEnd_toStartOf="@+id/imgRecord"
         app:layout_constraintStart_toStartOf="@+id/fotterLayout"
         app:layout_constraintTop_toTopOf="@+id/fotterLayout" />
 
@@ -147,7 +147,7 @@
         android:src="@drawable/setting_active"
         app:layout_constraintBottom_toBottomOf="@+id/fotterLayout"
         app:layout_constraintEnd_toEndOf="@+id/fotterLayout"
-        app:layout_constraintStart_toEndOf="@+id/imgPlus"
+        app:layout_constraintStart_toEndOf="@+id/imgRecord"
         app:layout_constraintTop_toTopOf="@+id/fotterLayout" />
 
 

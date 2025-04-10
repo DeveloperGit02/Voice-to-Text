@@ -24,7 +24,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/headerlogo"
+        android:src="@drawable/app_new_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -134,29 +134,79 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
-    <ImageView
-        android:id="@+id/micImg"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/mic_b"
+    <TextView
+        android:id="@+id/txtRecent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Recent Files"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLivetoText" />
+
+
+    <TextView
+        android:id="@+id/txtViewAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="View All"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUploadText" />
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Recent Files Show Here"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:fontFamily="@font/poppins_regular"
+        android:textColor="@color/black"
+        android:id="@+id/recentFilesView"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHomeList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/textTaptoStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/txtRecent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:itemCount="4"
+        tools:listitem="@layout/recent_items" />
 
     <TextView
         android:id="@+id/textTaptoStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Tap the plus button to proceed"
+        android:text="Tap the mic button to proceed"
         android:textColor="@color/black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/imgPlus"
+        app:layout_constraintBottom_toTopOf="@+id/imgmainPlus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -177,7 +227,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/plus"
+        android:src="@drawable/mic_b"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -189,7 +239,7 @@
         android:background="@drawable/home_active"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/fotterLayout"
-        app:layout_constraintEnd_toStartOf="@+id/imgPlus"
+        app:layout_constraintEnd_toStartOf="@+id/imgmainPlus"
         app:layout_constraintStart_toStartOf="@+id/fotterLayout"
         app:layout_constraintTop_toTopOf="@+id/fotterLayout" />
 
@@ -201,7 +251,7 @@
         android:src="@drawable/setting"
         app:layout_constraintBottom_toBottomOf="@+id/fotterLayout"
         app:layout_constraintEnd_toEndOf="@+id/fotterLayout"
-        app:layout_constraintStart_toEndOf="@+id/imgPlus"
+        app:layout_constraintStart_toEndOf="@+id/imgmainPlus"
         app:layout_constraintTop_toTopOf="@+id/fotterLayout" />
 
 

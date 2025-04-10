@@ -42,7 +42,6 @@ class SharedPreferencesManager(context: Context) {
     }
 
 
-
     fun clearRecognizedText() {
         val editor = sharedPreferences.edit()
         editor.remove(KEY_RECOGNIZED_TEXT) // Removes the specific key

@@ -3,6 +3,7 @@ package com.voicetotype
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.voicetotype.database.AppDatabase
@@ -19,7 +20,7 @@ class HistoryScreen : AppCompatActivity() {
     private lateinit var db: AppDatabase
     private lateinit var userDao: RecordDao
     private lateinit var userRepository: UserRepository
-    var fAdapter: FilesAdapter? = null
+    var fAdapter: HistoryAdapter? = null
     var recordIdValue: Int? = null
     var filename: String? = null
 
@@ -35,43 +36,47 @@ class HistoryScreen : AppCompatActivity() {
         userRepository = UserRepository(userDao)
 
 
-//        getRecord()
-
-
         lifecycleScope.launch(Dispatchers.IO) {
             // Get all records from the repository
             val allRecords = userRepository.getAllRecords()
 
-            // Initialize the adapter and pass the lambda for deletion
-            fAdapter = FilesAdapter(allRecords) { fileName, recordId, data, image ->
-                filename = fileName
-                recordIdValue = recordId
-                // Inside the lambda, perform the deletion in the IO thread
-//                lifecycleScope.launch(Dispatchers.IO) {
-//                    userRepository.deleteRecordById(recordId)
-
-
-                startActivity(
-                    Intent(
-                        this@HistoryScreen, ViewActivity::class.java
-                    ).putExtra("datafile", data)
-                )
-
-                image.setOnClickListener {
+            // Initialize the adapter with delete and item click lambdas
+            fAdapter = HistoryAdapter(allRecords, delIcon = {  recordId , fileNmm ->
+                lifecycleScope.launch(Dispatchers.Main) {
+                    filename = fileNmm
+                    recordIdValue = recordId
                     showDialog()
                 }
-            }
+            }, id = { data ->
+                lifecycleScope.launch(Dispatchers.Main) {
 
-            // Set the adapter to RecyclerView
+
+                    startActivity(
+                        Intent(
+                            this@HistoryScreen, ViewActivity::class.java
+                        ).putExtra("datafile", data)
+                    )
+                }
+            })
+
+
+            // Back to Main thread to update UI
             withContext(Dispatchers.Main) {
                 binding.rvRecentItemList.adapter = fAdapter
+                fAdapter?.notifyDataSetChanged()
             }
         }
 
 
 
         binding.icHome.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
-        binding.imgHistoryPlus.setOnClickListener { startActivity(Intent(this, LiveSpeech::class.java)) }
+        binding.imgHistoryPlus.setOnClickListener {
+            startActivity(
+                Intent(
+                    this, LiveSpeech::class.java
+                )
+            )
+        }
         binding.icSetting.setOnClickListener {
             startActivity(
                 Intent(
@@ -81,6 +86,7 @@ class HistoryScreen : AppCompatActivity() {
         }
 
     }
+
 
     private fun showDialog() {
 
@@ -109,8 +115,6 @@ class HistoryScreen : AppCompatActivity() {
 
 
     }
-
-
 
 
 }
