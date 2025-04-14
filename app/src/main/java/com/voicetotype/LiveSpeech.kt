@@ -1,7 +1,6 @@
 package com.voicetotype
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -17,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.voicetotype.database.AppDatabase
 import com.voicetotype.database.DataRecordModel
@@ -43,7 +41,6 @@ class LiveSpeech : AppCompatActivity() {
     private lateinit var db: AppDatabase
     private lateinit var userDao: RecordDao
     private lateinit var userRepository: UserRepository
-    var RECORD_AUDIO_REQUEST_CODE = 100
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
 
@@ -58,42 +55,62 @@ class LiveSpeech : AppCompatActivity() {
         userDao = db.recordDao()
         userRepository = UserRepository(userDao)
         initializeSpeechRecognizer()
-        checkAndRequestAudioPermission()
 
         // Clear any previously saved text
         sharedPreferencesManager.clearRecognizedText()
+
+        requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                if (isGranted) {
+                    if (isListening) {
+
+                        if (binding.textView1.text.isEmpty()) {
+                            stopListening()
+                            binding.txtTaptoSpech.text = "Tap to start Live Speech"
+                            binding.imgRecord.setImageResource(R.drawable.livespeech_mic)
+                            Toast.makeText(
+                                this@LiveSpeech,
+                                "Cannot save file because Text is Empty",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            stopListening()
+                            binding.txtTaptoSpech.text = "Tap to start Live Speech"
+                            binding.imgRecord.setImageResource(R.drawable.livespeech_mic)
+                            binding.icLiveRecorder.visibility = View.GONE
+                            addData()
+                        }
+
+
+                    } else {
+                        startListening()
+                        binding.txtTaptoSpech.text = "Tap to Stop and Save File"
+                        binding.imgRecord.setImageResource(R.drawable.livespeech_mic_red)
+                        binding.icLiveRecorder.visibility = View.GONE
+                    }
+                } else {
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                            this, android.Manifest.permission.RECORD_AUDIO
+                        )
+                    ) {
+                        // User checked "Don't ask again"
+                        showPermissionSettingsDialog()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Audio permission is required to use speech features.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+
+
+                }
+            }
 
         binding.imgRecord.setOnClickListener {
             requestPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
         }
 
-        requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                if (isGranted) {
-                    if (isListening) {
-                        stopListening()
-                        binding.txtTaptoSpech.text = "Tap to start Live Speech"
-                        binding.imgRecord.setImageResource(R.drawable.livespeech_mic)
-                        binding.icLiveRecorder.visibility = View.GONE
-                        addData()
-                    } else {
-                        startListening()
-                        binding.txtTaptoSpech.text = "Tap to Stop"
-                        binding.imgRecord.setImageResource(R.drawable.livespeech_mic_red)
-                        binding.icLiveRecorder.visibility = View.GONE
-                    }
-                } else {
-                    // Handle denial
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            android.Manifest.permission.RECORD_AUDIO
-                        )
-                    ) {
-                        showSettingsDialog() // Guide to settings
-                    } else {
-                        showRationaleDialog() // Optional: explain why you need the permission
-                    }
-                }
-            }
 
         binding.shareImg.setOnClickListener {
             val recognizedText = sharedPreferencesManager.getRecognizedText()
@@ -113,16 +130,21 @@ class LiveSpeech : AppCompatActivity() {
 
         binding.icSetting.setOnClickListener {
             startActivity(Intent(this, SettingScreen::class.java))
+            finish()
+
         }
 
         binding.icHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
+
         }
 
         binding.backImg.setOnClickListener {
             finish()
         }
     }
+
 
     private fun initializeSpeechRecognizer() {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
@@ -188,10 +210,11 @@ class LiveSpeech : AppCompatActivity() {
         lifecycleScope.launch(Dispatchers.IO) {
             val existingText = sharedPreferencesManager.getRecognizedText()
 
+//            val currentDateTime = SimpleDateFormat("dd MMMM 'at' h:mm a", Locale.getDefault()).format(Date())
             val currentDateTime =
-                SimpleDateFormat("dd MMMM 'at' h:mm a", Locale.getDefault()).format(
-                    Date()
-                )
+                SimpleDateFormat("dd MMMM yyyy 'at' h:mm a", Locale.getDefault()).format(Date())
+
+
             val listIndex = sharedPreferencesManager.getLastSpeechIndex()
 
             val newindex = listIndex + 1
@@ -225,87 +248,29 @@ class LiveSpeech : AppCompatActivity() {
         speechRecognizer.cancel()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        speechRecognizer.destroy()
-    }
-
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-    private fun checkAndRequestAudioPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this, android.Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // Show rationale first if needed
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this, android.Manifest.permission.RECORD_AUDIO
-                )
-            ) {
-                showRationaleDialog()
-            } else {
-                // First time or already denied with "Don't ask again"
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.RECORD_AUDIO),
-                    RECORD_AUDIO_REQUEST_CODE
-                )
-            }
-        } else {
 
-        }
-    }
-
-    private fun showRationaleDialog() {
-        AlertDialog.Builder(this).setTitle("Microphone Permission Needed")
-            .setMessage("This app needs microphone access to work properly. Please allow the permission.")
-            .setCancelable(false).setPositiveButton("Allow") { _, _ ->
-
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.RECORD_AUDIO),
-                    RECORD_AUDIO_REQUEST_CODE
-                )
-
-            }.setNegativeButton("Exit App") { _, _ ->
-                finish() // or handle however you like
-            }.show()
-    }
-
-    private fun showSettingsDialog() {
+    private fun showPermissionSettingsDialog() {
         AlertDialog.Builder(this).setTitle("Permission Required")
-            .setMessage("This app requires microphone access to function. Please enable it in settings.")
+            .setMessage("Please enable microphone access in Settings to use speech recognition.")
             .setPositiveButton("Go to Settings") { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 val uri = Uri.fromParts("package", packageName, null)
                 intent.data = uri
-
                 startActivity(intent)
-            }.setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }.setCancelable(false)
-            .show()
+            }.setNegativeButton("Cancel", null).show()
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if (requestCode == RECORD_AUDIO_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("123456789", "onDestroy: " + "onDestroy")
+        stopListening()
+        speechRecognizer.destroy()
 
-            } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                        this, android.Manifest.permission.RECORD_AUDIO
-                    )
-                ) {
-                    // Permanently denied
-                    showSettingsDialog()
-                } else {
-                    // User denied, re-show rationale
-                    showRationaleDialog()
-
-
-                }
-            }
-        }
     }
+
 
 }
+

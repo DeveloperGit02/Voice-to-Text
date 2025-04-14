@@ -64,11 +64,8 @@ dependencies {
     //kapt("androidx.room:room-compiler:2.6.1") // Use KAPT for annotation processing
 
     ksp("androidx.room:room-compiler:2.5.0")
-
-
     // Kotlin Coroutines Support for Room
     implementation("androidx.room:room-ktx:2.6.1")
-
     // Optional - Paging support
     implementation("androidx.room:room-paging:2.6.1")
 

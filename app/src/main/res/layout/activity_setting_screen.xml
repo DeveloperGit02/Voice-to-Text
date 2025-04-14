@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
+
     android:layout_height="match_parent"
     tools:context=".SettingScreen">
 
@@ -51,6 +53,7 @@
         android:fontFamily="@font/poppins_semibold"
         android:padding="2dp"
         android:text="FAQs"
+        android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +77,8 @@
         android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
         android:fontFamily="@font/poppins_semibold"
         android:padding="2dp"
+        android:textColor="@color/black"
+
         android:text="Contact us"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,6 +104,8 @@
         android:fontFamily="@font/poppins_semibold"
         android:padding="2dp"
         android:text="Privacy Policy"
+        android:textColor="@color/black"
+
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +130,8 @@
         android:drawableEnd="@drawable/baseline_arrow_forward_ios_24"
         android:fontFamily="@font/poppins_semibold"
         android:padding="2dp"
+        android:textColor="@color/black"
+
         android:text="About App"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

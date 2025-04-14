@@ -92,7 +92,7 @@ class HistoryScreen : AppCompatActivity() {
 
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage("Are you sure you want to delete this file" + filename)
+        builder.setMessage("Are you sure you want to delete this file  " + filename)
             .setTitle("Delete").setPositiveButton("Yes") { dialog, which ->
                 lifecycleScope.launch(Dispatchers.IO) {
                     userRepository.deleteRecordById(recordIdValue!!)

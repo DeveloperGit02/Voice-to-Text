@@ -20,10 +20,14 @@ class SettingScreen : AppCompatActivity() {
         }
         binding.icHome.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+
+            finish()
         }
 
         binding.imgPlus.setOnClickListener {
             startActivity(Intent(this, LiveSpeech::class.java))
+            finish()
+
         }
 
 

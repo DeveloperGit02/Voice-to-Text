@@ -94,14 +94,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.icSetting -> {
                 startActivity(Intent(this, SettingScreen::class.java))
 //                startActivity(Intent(this, ::class.java))
+
             }
 
             R.id.icHistory -> {
                 startActivity(Intent(this, HistoryScreen::class.java))
+
             }
 
             R.id.txtViewAll -> {
                 startActivity(Intent(this, HistoryScreen::class.java))
+
             }
 
             R.id.uploadAudio -> {
@@ -119,7 +122,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage("Are you sure you want to delete this file" + filename)
+        builder.setMessage("Are you sure you want to delete this file  " + filename)
             .setTitle("Delete").setPositiveButton("Yes") { dialog, which ->
                 lifecycleScope.launch(Dispatchers.IO) {
                     userRepository.deleteRecordById(recordIdValue!!)

@@ -20,11 +20,11 @@
 
     <ImageView
         android:id="@+id/headerIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/headerlogo"
+        android:src="@drawable/app_new_logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,9 +45,11 @@
 
     <TextView
         android:id="@+id/txtGetTranscription"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="Get transcription &amp; summary"
         android:textColor="@color/black"
