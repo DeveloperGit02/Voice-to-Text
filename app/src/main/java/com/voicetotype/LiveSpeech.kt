@@ -43,7 +43,6 @@ class LiveSpeech : AppCompatActivity() {
     private lateinit var userRepository: UserRepository
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLiveSpeechBinding.inflate(layoutInflater)
@@ -111,7 +110,6 @@ class LiveSpeech : AppCompatActivity() {
             requestPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
         }
 
-
         binding.shareImg.setOnClickListener {
             val recognizedText = sharedPreferencesManager.getRecognizedText()
             if (!recognizedText.isNullOrEmpty() && recognizedText != "No text available to share") {
@@ -144,7 +142,6 @@ class LiveSpeech : AppCompatActivity() {
             finish()
         }
     }
-
 
     private fun initializeSpeechRecognizer() {
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
@@ -250,7 +247,6 @@ class LiveSpeech : AppCompatActivity() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-
     private fun showPermissionSettingsDialog() {
         AlertDialog.Builder(this).setTitle("Permission Required")
             .setMessage("Please enable microphone access in Settings to use speech recognition.")
@@ -262,7 +258,6 @@ class LiveSpeech : AppCompatActivity() {
             }.setNegativeButton("Cancel", null).show()
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         Log.e("123456789", "onDestroy: " + "onDestroy")
@@ -270,7 +265,6 @@ class LiveSpeech : AppCompatActivity() {
         speechRecognizer.destroy()
 
     }
-
 
 }
 
