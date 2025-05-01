@@ -2,9 +2,7 @@ package com.voicetotype
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.voicetotype.database.DataRecordModel
 import com.voicetotype.databinding.RecentItemsBinding
@@ -12,7 +10,7 @@ import com.voicetotype.databinding.RecentItemsBinding
 class HistoryAdapter(
     var allRecords: List<DataRecordModel>,
     var delIcon: ( Int, String) -> Unit,
-    var id: ( String) -> Unit
+    var id: ( String, String) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(var binding: RecentItemsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -37,7 +35,7 @@ class HistoryAdapter(
 
             holder.binding.view.setOnClickListener {
                 id(
-                    allRecords[position].data,
+                    allRecords[position].data, allRecords[position].name
                 )
             }
         }
@@ -48,5 +46,8 @@ class HistoryAdapter(
         return allRecords.size
     }
 
-
+    fun updateRecords(newList: List<DataRecordModel>) {
+        allRecords = newList
+        notifyDataSetChanged()
+    }
 }

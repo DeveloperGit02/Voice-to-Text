@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.voicetotype.databinding.ActivitySettingScreenBinding
 
 class SettingScreen : AppCompatActivity(), View.OnClickListener {
+
     lateinit var binding: ActivitySettingScreenBinding
+
     var faqData =
         "1. What does this app do?\n" + "Our app converts speech into written text in real-time or from pre-recorded audio files. It’s ideal for students, professionals, and anyone needing accurate transcriptions quickly.\n" + "\n" + "2. What types of audio files are supported?\n" + "You can upload most common audio formats using the built-in file picker. We recommend using .m4a, .mp3, or .wav for best results.\n" + "\n" + "3. Is internet connection required?\n" + "Live transcription uses Apple’s built-in speech framework and can work offline for supported languages. However, uploading audio may require internet access, especially for larger files.\n" + "\n" + "4. Can I share the transcribed text?\n" + "Yes! After transcription, you can copy the text or share it via other apps using the share menu.\n" + "\n" + "5. Can I transcribe audio shared from other apps?\n" + "Absolutely. If an audio file is shared from another app, ours can automatically open, play, and transcribe the file."
 
@@ -79,4 +81,5 @@ class SettingScreen : AppCompatActivity(), View.OnClickListener {
         }
 
     }
+
 }

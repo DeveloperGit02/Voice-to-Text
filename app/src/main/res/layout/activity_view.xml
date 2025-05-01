@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
-
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ViewActivity">
 
     <View
@@ -22,8 +22,8 @@
         android:id="@+id/backImg"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/back"
         android:layout_marginStart="20dp"
+        android:src="@drawable/back"
         app:layout_constraintBottom_toBottomOf="@+id/viewTop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/viewTop" />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Text File"
+        android:text="Details"
         android:textColor="@color/white"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +55,70 @@
         app:layout_constraintTop_toTopOf="@+id/viewTop" />
 
 
+    <View
+        android:id="@+id/viewPlay"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/skyblue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewTop" />
+
+
+    <ImageView
+        android:id="@+id/imgMsg"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/app_new_logo"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPlay"
+        app:layout_constraintStart_toStartOf="@+id/viewPlay"
+        app:layout_constraintTop_toTopOf="@+id/viewPlay" />
+
+
+    <TextView
+        android:id="@+id/speechname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:hint="speech name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPlay"
+        app:layout_constraintEnd_toEndOf="@+id/viewPlay"
+        app:layout_constraintStart_toStartOf="@+id/viewPlay"
+        app:layout_constraintTop_toTopOf="@+id/viewPlay" />
+
+
+    <ImageView
+        android:id="@+id/playButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:padding="6dp"
+        android:src="@drawable/play_buttton"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPlay"
+        app:layout_constraintEnd_toEndOf="@id/viewPlay"
+        app:layout_constraintTop_toTopOf="@+id/viewPlay"
+        app:tint="@color/white" />
+
+
+    <ImageView
+        android:id="@+id/pauseButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:padding="6dp"
+        android:src="@drawable/pause"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPlay"
+        app:layout_constraintEnd_toEndOf="@id/viewPlay"
+        app:layout_constraintTop_toTopOf="@+id/viewPlay"
+        app:tint="@color/white" />
+
+
     <TextView
         android:id="@+id/outputView"
         android:layout_width="match_parent"
@@ -66,7 +130,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewTop" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPlay" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,7 +71,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-
         lisener()
 
     }
@@ -119,8 +118,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun showDialog() {
-
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to delete this file  " + filename)
             .setTitle("Delete").setPositiveButton("Yes") { dialog, which ->
@@ -140,7 +137,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                             binding.recentFilesView.visibility = View.GONE
                         }
                     }
-
                 }
             }.setNegativeButton("No") { dialog, which ->
                 dialog.dismiss()
@@ -148,8 +144,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
-
-
     }
 
 

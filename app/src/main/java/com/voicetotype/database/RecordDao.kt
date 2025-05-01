@@ -16,4 +16,19 @@ interface RecordDao {
     @Query("DELETE FROM DataRecordModel WHERE id = :recordId")
     suspend fun deleteRecord(recordId: Int)
 
+
+
+    @Query("""
+    SELECT * FROM DataRecordModel 
+    WHERE LOWER(name) LIKE '%' || LOWER(:searchQuery) || '%' 
+       OR LOWER(data) LIKE '%' || LOWER(:searchQuery) || '%'
+       OR LOWER(dateTime) LIKE '%' || LOWER(:searchQuery) || '%'
+    ORDER BY id DESC
+""")
+    suspend fun searchRecords(searchQuery: String): List<DataRecordModel>
+
+
+//    @Query("SELECT * FROM DataRecordModel WHERE LOWER(name) LIKE '%' || LOWER(:searchQuery) || '%' ORDER BY id DESC")
+//    suspend fun searchRecords(searchQuery: String): List<DataRecordModel>
+
 }

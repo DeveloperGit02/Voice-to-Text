@@ -3,7 +3,10 @@ package com.voicetotype
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageView
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.voicetotype.database.AppDatabase
@@ -36,36 +39,63 @@ class HistoryScreen : AppCompatActivity() {
         userRepository = UserRepository(userDao)
 
 
+
+
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString().trim()
+                if (query.isEmpty()) {
+                    loadAllRecords()
+                } else {
+                    searchRecords(query)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+        })
+
+
+
         lifecycleScope.launch(Dispatchers.IO) {
             // Get all records from the repository
-            val allRecords = userRepository.getAllRecords()
+//            val allRecords = userRepository.getAllRecords()
 
             // Initialize the adapter with delete and item click lambdas
-            fAdapter = HistoryAdapter(allRecords, delIcon = {  recordId , fileNmm ->
+            fAdapter = HistoryAdapter(listOf(), delIcon = { recordId, fileNmm ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     filename = fileNmm
                     recordIdValue = recordId
                     showDialog()
                 }
-            }, id = { data ->
+            }, id = { data, name ->
                 lifecycleScope.launch(Dispatchers.Main) {
-
-
                     startActivity(
                         Intent(
                             this@HistoryScreen, ViewActivity::class.java
-                        ).putExtra("datafile", data)
+                        ).putExtra("datafile", data).putExtra("nameoffile", name)
+
                     )
+
                 }
+
             })
 
 
             // Back to Main thread to update UI
             withContext(Dispatchers.Main) {
                 binding.rvRecentItemList.adapter = fAdapter
+                loadAllRecords()
                 fAdapter?.notifyDataSetChanged()
             }
+
+
         }
+
+
 
 
 
@@ -84,7 +114,47 @@ class HistoryScreen : AppCompatActivity() {
                 )
             )
         }
+        binding.icSearch.setOnClickListener {
+            binding.searchView.visibility = View.VISIBLE
+        }
+        binding.txtClose.setOnClickListener {
+            binding.searchBar.text?.clear()
 
+            binding.searchView.visibility = View.GONE
+        }
+
+        binding.txtHome.setOnClickListener {
+            val query = binding.searchBar.text.toString()
+            if (query.isBlank()) {
+                loadAllRecords()
+            } else {
+                searchRecords(query)
+            }
+        }
+
+
+    }
+
+    private fun loadAllRecords() {
+        lifecycleScope.launch {
+            val records = withContext(Dispatchers.IO) {
+                userDao.getAllRecords()
+            }
+            fAdapter?.updateRecords(records)
+        }
+    }
+
+
+    private fun searchRecords(query: String) {
+        val trimmedQuery = query.trim()
+        lifecycleScope.launch {
+            val results = withContext(Dispatchers.IO) {
+                userDao.searchRecords(trimmedQuery)
+            }
+
+            Log.d("SEARCH", "Query: '$trimmedQuery', Results: $results")
+            fAdapter?.updateRecords(results)
+        }
     }
 
 
