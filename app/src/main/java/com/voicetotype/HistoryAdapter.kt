@@ -28,6 +28,17 @@ class HistoryAdapter(
             binding.txtDateTime.text = allRecords[position].dateTime
 
 
+            val dataText = allRecords[position].data
+            val words = dataText.trim().split("\\s+".toRegex())
+            val preview = if (words.size <= 8) {
+                words.joinToString(" ")
+            } else {
+                words.take(8).joinToString(" ") + "..."
+            }
+
+            binding.dataText.text = preview
+
+
             holder.binding.icDelete.setOnClickListener {
                delIcon( allRecords[position].id , allRecords[position].name)
             }
