@@ -25,9 +25,10 @@
         android:layout_height="36dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/app_new_logo"
+        android:src="@drawable/back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
 
     <TextView
@@ -157,7 +158,6 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
-
         android:src="@drawable/livespeech"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/view1"
@@ -197,7 +197,6 @@
 
     <ImageView
         android:id="@+id/imgUploadAudio"
-
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="30dp"
@@ -267,7 +266,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/plus"
+        android:src="@drawable/livespeech_mic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

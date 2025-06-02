@@ -10,7 +10,8 @@ data class DataRecordModel (
     val name: String,
     val dateTime: String,
     val type: String,
-    val data: String // Large text data
+    val data: String, // Large text data
+    val audioPath: String // File path to saved audio
 )
 
 

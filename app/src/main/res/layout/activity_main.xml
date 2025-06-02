@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
-
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <View
@@ -59,10 +58,10 @@
         android:id="@+id/txtGetTranscription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
         android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_semibold"
+        android:gravity="center_horizontal"
         android:text="Get transcription &amp; summary"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -72,7 +71,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="20dp"
@@ -80,7 +79,6 @@
         android:backgroundTint="@color/grey"
         android:orientation="horizontal"
         android:padding="6dp"
-        android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtGetTranscription">
@@ -97,16 +95,6 @@
             android:src="@drawable/livespeech" />
 
 
-        <ImageView
-            android:id="@+id/uploadAudio"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_bg"
-            android:padding="10dp"
-            android:src="@drawable/upload_audio" />
-
-
     </LinearLayout>
 
     <TextView
@@ -115,27 +103,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/poppins_medium"
+        android:gravity="center"
         android:text="LIVE SPEECH TO TEXT"
         android:textColor="@color/skyblue"
-        android:gravity="center_horizontal"
         android:textSize="10sp"
-        app:layout_constraintEnd_toStartOf="@+id/txtUploadText"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
-        android:id="@+id/txtUploadText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="UPLOAD AUDIO TO TEXT"
-        android:textColor="@color/black"
-        android:gravity="center_horizontal"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-        app:layout_constraintStart_toEndOf="@+id/txtLivetoText"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
         android:id="@+id/txtRecent"
@@ -147,6 +122,7 @@
         android:text="Recent Files"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtLivetoText" />
 
@@ -158,40 +134,37 @@
         android:layout_marginEnd="30dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="View All"
-        android:textColor="@color/black"
+        android:textColor="@color/skyblue"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUploadText" />
+        app:layout_constraintTop_toBottomOf="@+id/txtLivetoText" />
 
     <TextView
+        android:id="@+id/recentFilesView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Recent Files Show Here"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textSize="20sp"
-        android:visibility="gone"
         android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:hint="Recent Files Show Here"
         android:textColor="@color/black"
-        android:id="@+id/recentFilesView"
-        />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHomeList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="6dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/textTaptoStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRecent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:itemCount="4"
         tools:listitem="@layout/recent_items" />
 
@@ -199,14 +172,14 @@
         android:id="@+id/textTaptoStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/poppins_semibold"
-        android:text="Tap the mic button to proceed"
+        android:gravity="center_horizontal"
+        android:text="Tap on the mic button to proceed"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:layout_marginHorizontal="20dp"
-        android:gravity="center_horizontal"
         app:layout_constraintBottom_toTopOf="@+id/imgmainPlus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

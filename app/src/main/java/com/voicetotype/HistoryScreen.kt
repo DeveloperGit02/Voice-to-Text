@@ -2,6 +2,7 @@ package com.voicetotype
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -32,13 +33,9 @@ class HistoryScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         db = AppDatabase.getDatabase(applicationContext)
         userDao = db.recordDao()
         userRepository = UserRepository(userDao)
-
-
 
 
         binding.searchBar.addTextChangedListener(object : TextWatcher {
@@ -58,8 +55,6 @@ class HistoryScreen : AppCompatActivity() {
             }
         })
 
-
-
         lifecycleScope.launch(Dispatchers.IO) {
             // Get all records from the repository
 //            val allRecords = userRepository.getAllRecords()
@@ -71,12 +66,12 @@ class HistoryScreen : AppCompatActivity() {
                     recordIdValue = recordId
                     showDialog()
                 }
-            }, id = { data, name ->
+            }, id = { data, name  , audioPath->
                 lifecycleScope.launch(Dispatchers.Main) {
                     startActivity(
                         Intent(
                             this@HistoryScreen, ViewActivity::class.java
-                        ).putExtra("datafile", data).putExtra("nameoffile", name)
+                        ).putExtra("datafile", data).putExtra("nameoffile", name).putExtra("audio" , audioPath)
 
                     )
 
@@ -95,11 +90,8 @@ class HistoryScreen : AppCompatActivity() {
 
         }
 
-
-
-
-
         binding.icHome.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+
         binding.imgHistoryPlus.setOnClickListener {
             startActivity(
                 Intent(
@@ -107,6 +99,7 @@ class HistoryScreen : AppCompatActivity() {
                 )
             )
         }
+
         binding.icSetting.setOnClickListener {
             startActivity(
                 Intent(
@@ -114,9 +107,11 @@ class HistoryScreen : AppCompatActivity() {
                 )
             )
         }
+
         binding.icSearch.setOnClickListener {
             binding.searchView.visibility = View.VISIBLE
         }
+
         binding.txtClose.setOnClickListener {
             binding.searchBar.text?.clear()
 
@@ -132,6 +127,9 @@ class HistoryScreen : AppCompatActivity() {
             }
         }
 
+        binding.headerIcon.setOnClickListener{
+        finish()
+}
 
     }
 
@@ -156,7 +154,6 @@ class HistoryScreen : AppCompatActivity() {
             fAdapter?.updateRecords(results)
         }
     }
-
 
     private fun showDialog() {
 

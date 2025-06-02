@@ -2,6 +2,7 @@ package com.voicetotype
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import com.voicetotype.databinding.ActivityAppContentScreenBinding
 
 class AppContentScreen : AppCompatActivity() {
@@ -18,10 +19,12 @@ class AppContentScreen : AppCompatActivity() {
         binding.heading.text = haedingData
 
         val data = intent.getStringExtra("data")
-        binding.txtContentData.text = data
+        binding.txtContentData.text =
+            HtmlCompat.fromHtml(data.toString(), HtmlCompat.FROM_HTML_MODE_LEGACY)
 
 
-        binding.back.setOnClickListener{
+
+        binding.back.setOnClickListener {
             finish()
         }
 

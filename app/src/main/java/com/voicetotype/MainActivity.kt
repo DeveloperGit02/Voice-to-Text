@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.voicetotype.database.AppDatabase
@@ -36,16 +35,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         userDao = db.recordDao()
         userRepository = UserRepository(userDao)
 
+
+
+
         lifecycleScope.launch(Dispatchers.IO) {
             // Get all records from the repository
+
             val allRecords = userRepository.getAllRecords()
 
             if (allRecords.isEmpty()) {
                 binding.recentFilesView.visibility = View.VISIBLE
+                binding.txtViewAll.visibility = View.INVISIBLE
+
             } else {
                 binding.recentFilesView.visibility = View.GONE
-            }
+                binding.txtViewAll.visibility = View.VISIBLE
 
+
+            }
             // Initialize the adapter with delete and item click lambdas
             fAdapter = FilesAdapter(allRecords, iconCall = { view, recordId, fileNm ->
                 lifecycleScope.launch(Dispatchers.Main) {
@@ -53,14 +60,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     recordIdValue = recordId
                     showDialog()
                 }
-            }, id = { data ->
+            }, id = { data, fname ->
+
                 lifecycleScope.launch(Dispatchers.Main) {
                     startActivity(
                         Intent(
                             this@MainActivity, ViewActivity::class.java
-                        ).putExtra("datafile", data)
+                        ).putExtra("datafile", data).putExtra("nameoffile", fname)
                     )
                 }
+
             })
 
 
@@ -79,7 +88,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.imgmainPlus.setOnClickListener(this)
         binding.icSetting.setOnClickListener(this)
         binding.icHistory.setOnClickListener(this)
-        binding.uploadAudio.setOnClickListener(this)
+//        binding.uploadAudio.setOnClickListener(this)
         binding.txtViewAll.setOnClickListener(this)
     }
 
@@ -106,13 +115,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             }
 
-            R.id.uploadAudio -> {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Currently Not Working will try to start on next update ",
-                    Toast.LENGTH_LONG
-                ).show()
-            }
+//            R.id.uploadAudio -> {
+//                Toast.makeText(
+//                    this@MainActivity,
+//                    "Currently Not Working will try to start on next update ",
+//                    Toast.LENGTH_LONG
+//                ).show()
+//            }
 
         }
     }
@@ -131,10 +140,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         fAdapter?.allRecords = updatedRecords
                         fAdapter?.notifyDataSetChanged()
 
-                        if(updatedRecords.isEmpty()){
+                        if (updatedRecords.isEmpty()) {
                             binding.recentFilesView.visibility = View.VISIBLE
-                        }else{
+                            binding.txtViewAll.visibility = View.INVISIBLE
+
+                        } else {
                             binding.recentFilesView.visibility = View.GONE
+                            binding.txtViewAll.visibility = View.VISIBLE
+
                         }
                     }
                 }

@@ -46,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:hint="textData"
+            android:textColor="@color/grey"
             android:singleLine="true"
             app:layout_constraintEnd_toStartOf="@+id/icDelete"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +57,7 @@
             android:id="@+id/txtDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/grey"
             android:text="date and time"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dataText" />

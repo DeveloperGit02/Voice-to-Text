@@ -10,7 +10,7 @@ import com.voicetotype.databinding.RecentItemsBinding
 class HistoryAdapter(
     var allRecords: List<DataRecordModel>,
     var delIcon: ( Int, String) -> Unit,
-    var id: ( String, String) -> Unit
+    var id: ( String, String , String) -> Unit
 ) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(var binding: RecentItemsBinding) : RecyclerView.ViewHolder(binding.root)
@@ -46,7 +46,7 @@ class HistoryAdapter(
 
             holder.binding.view.setOnClickListener {
                 id(
-                    allRecords[position].data, allRecords[position].name
+                    allRecords[position].data, allRecords[position].name , allRecords[position].audioPath
                 )
             }
         }

@@ -11,7 +11,7 @@ import com.voicetotype.databinding.RecentItemsBinding
 class FilesAdapter(
     var allRecords: List<DataRecordModel>,
     var iconCall: (ImageView, Int, String) -> Unit,
-    var id: ( String) -> Unit
+    var id: ( String , String) -> Unit
 ) : RecyclerView.Adapter<FilesAdapter.ViewHolder>() {
 
     private var isExpanded = false
@@ -47,7 +47,7 @@ class FilesAdapter(
 
             holder.binding.view.setOnClickListener {
                 id(
-                    allRecords[position].data,
+                    allRecords[position].data, allRecords[position].name
                 )
             }
 

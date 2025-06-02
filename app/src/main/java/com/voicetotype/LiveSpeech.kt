@@ -219,7 +219,7 @@ class LiveSpeech : AppCompatActivity() {
             sharedPreferencesManager.saveLastSpeechIndex(newindex)
 
             val user = DataRecordModel(
-                0, "Speech_" + newindex, currentDateTime, "dummy", existingText.toString()
+                0, "Speech_" + newindex, currentDateTime, "dummy", existingText.toString(), ""
             )
             userRepository.insert(user)
 
@@ -267,4 +267,3 @@ class LiveSpeech : AppCompatActivity() {
     }
 
 }
-
